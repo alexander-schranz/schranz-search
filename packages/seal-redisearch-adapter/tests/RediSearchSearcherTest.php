@@ -33,12 +33,4 @@ class RediSearchSearcherTest extends AbstractSearcherTestCase
     {
         $this->markTestSkipped('Not supported by RediSearch: https://github.com/RediSearch/RediSearch/issues/680 or https://github.com/RediSearch/RediSearch/issues/5032');
     }
-
-    /**
-     * @doesNotPerformAssertions
-     */
-    public function testSearchConditionWithHighlight(): void
-    {
-        $this->markTestSkipped('Not supported by RediSearch: https://github.com/RediSearch/RediSearch/issues/4420 or https://redis.io/docs/latest/develop/interact/search-and-query/indexing/#limitations');
-    }
 }
