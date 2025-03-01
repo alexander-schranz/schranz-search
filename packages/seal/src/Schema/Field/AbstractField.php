@@ -28,6 +28,7 @@ abstract class AbstractField
         public readonly bool $filterable,
         public readonly bool $sortable,
         public readonly bool $distinct,
+        public readonly bool $facet,
         public readonly array $options,
     ) {
     }
