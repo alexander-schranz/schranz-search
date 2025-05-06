@@ -8,7 +8,7 @@
     "packages": [
         {
             "name": "cmsig/seal",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal",
@@ -105,7 +105,7 @@
         },
         {
             "name": "cmsig/seal-symfony-bundle",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../integrations/symfony",
@@ -3262,7 +3262,7 @@
         },
         {
             "name": "cmsig/seal-algolia-adapter",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-algolia-adapter",
@@ -3354,7 +3354,7 @@
         },
         {
             "name": "cmsig/seal-elasticsearch-adapter",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-elasticsearch-adapter",
@@ -3449,7 +3449,7 @@
         },
         {
             "name": "cmsig/seal-loupe-adapter",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-loupe-adapter",
@@ -3541,7 +3541,7 @@
         },
         {
             "name": "cmsig/seal-meilisearch-adapter",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-meilisearch-adapter",
@@ -3635,7 +3635,7 @@
         },
         {
             "name": "cmsig/seal-memory-adapter",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-memory-adapter",
@@ -3724,7 +3724,7 @@
         },
         {
             "name": "cmsig/seal-multi-adapter",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-multi-adapter",
@@ -3814,7 +3814,7 @@
         },
         {
             "name": "cmsig/seal-opensearch-adapter",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-opensearch-adapter",
@@ -3910,7 +3910,7 @@
         },
         {
             "name": "cmsig/seal-read-write-adapter",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-read-write-adapter",
@@ -4000,7 +4000,7 @@
         },
         {
             "name": "cmsig/seal-redisearch-adapter",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-redisearch-adapter",
@@ -4094,7 +4094,7 @@
         },
         {
             "name": "cmsig/seal-solr-adapter",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-solr-adapter",
@@ -4191,18 +4191,18 @@
         },
         {
             "name": "cmsig/seal-typesense-adapter",
-            "version": "0.8.0",
+            "version": "0.8.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-typesense-adapter",
-                "reference": "657e4dbce8859464e20311e03d7c1a2fb22f1575"
+                "reference": "7d7da626ba02bd24b25334f9365468d6d22fcf2b"
             },
             "require": {
                 "cmsig/seal": "^0.8",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0",
                 "symfony/http-client": "^5.4 || ^6.0 || ^7.0",
-                "typesense/typesense-php": "^4.8.1"
+                "typesense/typesense-php": "^4.8.1 || ^5.0"
             },
             "conflict": {
                 "monolog/monolog": "<2.0"
@@ -8603,16 +8603,16 @@
         },
         {
             "name": "typesense/typesense-php",
-            "version": "v4.9.3",
+            "version": "v5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/typesense/typesense-php.git",
-                "reference": "50fc2089ff4829c8e0e11d8c674e9da085b49998"
+                "reference": "0e8dee542c05b201becf4734319075e6c4d540b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/typesense/typesense-php/zipball/50fc2089ff4829c8e0e11d8c674e9da085b49998",
-                "reference": "50fc2089ff4829c8e0e11d8c674e9da085b49998",
+                "url": "https://api.github.com/repos/typesense/typesense-php/zipball/0e8dee542c05b201becf4734319075e6c4d540b3",
+                "reference": "0e8dee542c05b201becf4734319075e6c4d540b3",
                 "shasum": ""
             },
             "require": {
@@ -8628,6 +8628,8 @@
                 "psr/http-message": "^1.0 || ^2.0"
             },
             "require-dev": {
+                "mockery/mockery": "^1.6",
+                "phpunit/phpunit": "^11.2",
                 "squizlabs/php_codesniffer": "3.*",
                 "symfony/http-client": "^5.2"
             },
@@ -8668,7 +8670,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-29T15:34:34+00:00"
+            "time": "2025-05-05T17:35:26+00:00"
         },
         {
             "name": "voku/portable-ascii",
