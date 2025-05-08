@@ -44,10 +44,12 @@ final class Index
 
     /**
      * @param array<string, AbstractField> $fields
+     * @param array<string, mixed> $options
      */
     public function __construct(
         public readonly string $name,
         public readonly array $fields,
+        public readonly array $options = [],
     ) {
         $attributes = $this->getAttributes($fields);
         $this->searchableFields = $attributes['searchableFields'];
@@ -58,7 +60,7 @@ final class Index
 
     public function getIdentifierField(): IdentifierField
     {
-        if (!$this->identifierField instanceof Field\IdentifierField) { // validating the identifierField here as merged Index configuration could be have no identifier
+        if (!$this->identifierField instanceof Field\IdentifierField) { // validating the identifierField here as merged / extended Index configuration could have no identifier
             throw new \LogicException(
                 'No "IdentifierField" found for index "' . $this->name . '" but is required.',
             );
