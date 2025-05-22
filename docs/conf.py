@@ -9,7 +9,7 @@
 project = 'SEAL'
 copyright = '2023, Alexander Schranz'
 author = 'Alexander Schranz'
-release = '0.8'
+release = '0.9'
 html_title = 'SEAL Documentation'
 html_short_title = 'SEAL'
 html_favicon = '_static/icons/favicon.ico'
@@ -17,9 +17,9 @@ html_logo = '_static/icons/logo.svg'
 
 html_context = {
     "display_github": True, # Integrate GitHub
-    "github_user": "schranz-search", # Username
-    "github_repo": "schranz-search", # Repo name
-    "github_version": "0.8", # Version
+    "github_user": "PHP-CMSIG", # Username
+    "github_repo": "search", # Repo name
+    "github_version": "0.9", # Version
     "conf_py_path": "/docs/", # Path in the checkout to the docs root
 }
 

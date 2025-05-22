@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c2295ddcceea626e82ceb9db90deddf",
+    "content-hash": "c597a55631c9f50fa2ad7d4b74a7b946",
     "packages": [
         {
             "name": "alexkart/curl-builder",
@@ -119,7 +119,7 @@
         },
         {
             "name": "cmsig/seal",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal",
@@ -216,47 +216,47 @@
         },
         {
             "name": "cmsig/seal-yii-module",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../integrations/yii",
-                "reference": "8c667be3eb9aa1fb403edca649e31e9278deaf8a"
+                "reference": "b04c00720422ff18991f118a63983e0070d54b41"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "symfony/console": "^6.1",
                 "yiisoft/di": "^1.0",
                 "yiisoft/yii-console": "^2.0"
             },
             "conflict": {
-                "cmsig/seal-algolia-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-elasticsearch-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-loupe-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-meilisearch-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-memory-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-multi-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-opensearch-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-read-write-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-redisearch-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-solr-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-typesense-adapter": "<0.8 || >=0.9"
+                "cmsig/seal-algolia-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-elasticsearch-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-loupe-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-meilisearch-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-memory-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-multi-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-opensearch-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-read-write-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-redisearch-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-solr-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-typesense-adapter": "<0.9 || >=0.10"
             },
             "replace": {
                 "schranz-search/yii-module": "self.version"
             },
             "require-dev": {
-                "cmsig/seal-algolia-adapter": "^0.8",
-                "cmsig/seal-elasticsearch-adapter": "^0.8",
-                "cmsig/seal-loupe-adapter": "^0.8",
-                "cmsig/seal-meilisearch-adapter": "^0.8",
-                "cmsig/seal-memory-adapter": "^0.8",
-                "cmsig/seal-multi-adapter": "^0.8",
-                "cmsig/seal-opensearch-adapter": "^0.8",
-                "cmsig/seal-read-write-adapter": "^0.8",
-                "cmsig/seal-redisearch-adapter": "^0.8",
-                "cmsig/seal-solr-adapter": "^0.8",
-                "cmsig/seal-typesense-adapter": "^0.8",
+                "cmsig/seal-algolia-adapter": "^0.9",
+                "cmsig/seal-elasticsearch-adapter": "^0.9",
+                "cmsig/seal-loupe-adapter": "^0.9",
+                "cmsig/seal-meilisearch-adapter": "^0.9",
+                "cmsig/seal-memory-adapter": "^0.9",
+                "cmsig/seal-multi-adapter": "^0.9",
+                "cmsig/seal-opensearch-adapter": "^0.9",
+                "cmsig/seal-read-write-adapter": "^0.9",
+                "cmsig/seal-redisearch-adapter": "^0.9",
+                "cmsig/seal-solr-adapter": "^0.9",
+                "cmsig/seal-typesense-adapter": "^0.9",
                 "php-cs-fixer/shim": "^3.51",
                 "phpstan/extension-installer": "^1.2",
                 "phpstan/phpstan": "^1.10",
@@ -6011,15 +6011,15 @@
         },
         {
             "name": "cmsig/seal-algolia-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-algolia-adapter",
-                "reference": "2a8698c4ab6fa546e82ff0d783d6882a7abefa70"
+                "reference": "aed07da9e7405b9a8004b5916b27f456f3e3f407"
             },
             "require": {
                 "algolia/algoliasearch-client-php": "^4.4",
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
             },
@@ -6103,14 +6103,14 @@
         },
         {
             "name": "cmsig/seal-elasticsearch-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-elasticsearch-adapter",
-                "reference": "53278254e61f1dd4402405ee93f428a1994875b7"
+                "reference": "f099a07898f139d58c8f5878e87d38fe8d862b94"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "elasticsearch/elasticsearch": "^8.5.3 || ^9.0",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
@@ -6198,14 +6198,14 @@
         },
         {
             "name": "cmsig/seal-loupe-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-loupe-adapter",
-                "reference": "f48db741f4cd727d2ea411041f6b79b22e0d650f"
+                "reference": "711d6a3387dc2ebeb2360bf1bd7634e6346ffe26"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "loupe/loupe": "^0.11",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
@@ -6290,14 +6290,14 @@
         },
         {
             "name": "cmsig/seal-meilisearch-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-meilisearch-adapter",
-                "reference": "3cedc61a6a89c807f8cb0aa657d760a197e1028a"
+                "reference": "b610edcdfb14f992025114be7dfc9d5adfd76d08"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "meilisearch/meilisearch-php": "^1.2",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
@@ -6384,14 +6384,14 @@
         },
         {
             "name": "cmsig/seal-memory-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-memory-adapter",
-                "reference": "f14aaa8b1dfbdecd9a210f265406ab37a3033958"
+                "reference": "52a8c7875efee71da7b17ae11678ddb426fd336f"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1"
             },
             "replace": {
@@ -6473,14 +6473,14 @@
         },
         {
             "name": "cmsig/seal-multi-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-multi-adapter",
-                "reference": "a32e44e2ecdbb33127a29cab1bfe62bf32a7e45f"
+                "reference": "ad8e275da1168a8d4c45000a48f7607c5966f9f3"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
             },
@@ -6563,14 +6563,14 @@
         },
         {
             "name": "cmsig/seal-opensearch-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-opensearch-adapter",
-                "reference": "0ed5d9a76fad0b3f135b6361710d1245693a1532"
+                "reference": "9b98bc110351b4c075527f62574e205ebeea00a9"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "opensearch-project/opensearch-php": "^2.0",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
@@ -6659,14 +6659,14 @@
         },
         {
             "name": "cmsig/seal-read-write-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-read-write-adapter",
-                "reference": "eeaba807ea9d24e72ca7f233a59aca0a8481db6c"
+                "reference": "7ff514dbdef729c0dfec3afb1fb2ed3f8cf23207"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
             },
@@ -6749,14 +6749,14 @@
         },
         {
             "name": "cmsig/seal-redisearch-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-redisearch-adapter",
-                "reference": "8f872ed1d7763e92a57bf2e451438cc79aaf9434"
+                "reference": "491d56fa4d10a7d78a673ee08de81a943d95ffbc"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "ext-json": "*",
                 "ext-redis": "^5 || ^6.0",
                 "php": "^8.1",
@@ -6843,14 +6843,14 @@
         },
         {
             "name": "cmsig/seal-solr-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-solr-adapter",
-                "reference": "6e0ef0af9d17f0ffb0706c16e397311541e3bd74"
+                "reference": "2db75357a974b2662c04a381542202de9387c193"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0",
                 "solarium/solarium": "^6.3"
@@ -6940,14 +6940,14 @@
         },
         {
             "name": "cmsig/seal-typesense-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-typesense-adapter",
-                "reference": "7d7da626ba02bd24b25334f9365468d6d22fcf2b"
+                "reference": "6397bf2f92e7eefcbcf0ce4c3088e04a5ea336a2"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0",
                 "symfony/http-client": "^5.4 || ^6.0 || ^7.0",
@@ -10098,16 +10098,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.26",
+            "version": "1.12.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "84cbf8f018e01834b9b1ac3dacf3b9780e209e53"
+                "reference": "3a6e423c076ab39dfedc307e2ac627ef579db162"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/84cbf8f018e01834b9b1ac3dacf3b9780e209e53",
-                "reference": "84cbf8f018e01834b9b1ac3dacf3b9780e209e53",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3a6e423c076ab39dfedc307e2ac627ef579db162",
+                "reference": "3a6e423c076ab39dfedc307e2ac627ef579db162",
                 "shasum": ""
             },
             "require": {
@@ -10152,7 +10152,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-14T11:08:32+00:00"
+            "time": "2025-05-21T20:51:45+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -11052,12 +11052,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "0cc529f6cf08a858fcb7a2c5617780fcdc20d1fe"
+                "reference": "2145fcfdd72e389dce5082df4fb02d58fe32c5ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0cc529f6cf08a858fcb7a2c5617780fcdc20d1fe",
-                "reference": "0cc529f6cf08a858fcb7a2c5617780fcdc20d1fe",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/2145fcfdd72e389dce5082df4fb02d58fe32c5ca",
+                "reference": "2145fcfdd72e389dce5082df4fb02d58fe32c5ca",
                 "shasum": ""
             },
             "conflict": {
@@ -11159,7 +11159,7 @@
                 "chriskacerguis/codeigniter-restserver": "<=2.7.1",
                 "civicrm/civicrm-core": ">=4.2,<4.2.9|>=4.3,<4.3.3",
                 "ckeditor/ckeditor": "<4.25",
-                "clickstorm/cs-seo": ">=6,<6.7|>=7,<7.4|>=8,<8.3|>=9,<9.2",
+                "clickstorm/cs-seo": ">=6,<6.8|>=7,<7.5|>=8,<8.4|>=9,<9.3",
                 "co-stack/fal_sftp": "<0.2.6",
                 "cockpit-hq/cockpit": "<2.7|==2.7",
                 "codeception/codeception": "<3.1.3|>=4,<4.1.22",
@@ -11182,6 +11182,7 @@
                 "contao/managed-edition": "<=1.5",
                 "corveda/phpsandbox": "<1.3.5",
                 "cosenary/instagram": "<=2.3",
+                "couleurcitron/tarteaucitron-wp": "<0.3",
                 "craftcms/cms": "<4.15.3|>=5,<5.7.5",
                 "croogo/croogo": "<4",
                 "cuyz/valinor": "<0.12",
@@ -11370,7 +11371,7 @@
                 "imdbphp/imdbphp": "<=5.1.1",
                 "impresscms/impresscms": "<=1.4.5",
                 "impresspages/impresspages": "<1.0.13",
-                "in2code/femanager": "<5.5.3|>=6,<6.3.4|>=7,<7.2.3",
+                "in2code/femanager": "<5.5.5|>=6,<6.4.1|>=7,<7.4.2|>=8,<8.2.2",
                 "in2code/ipandlanguageredirect": "<5.1.2",
                 "in2code/lux": "<17.6.1|>=18,<24.0.2",
                 "in2code/powermail": "<7.5.1|>=8,<8.5.1|>=9,<10.9.1|>=11,<12.4.1",
@@ -11523,6 +11524,7 @@
                 "nette/application": ">=2,<2.0.19|>=2.1,<2.1.13|>=2.2,<2.2.10|>=2.3,<2.3.14|>=2.4,<2.4.16|>=3,<3.0.6",
                 "nette/nette": ">=2,<2.0.19|>=2.1,<2.1.13",
                 "nilsteampassnet/teampass": "<3.1.3.1-dev",
+                "nitsan/ns-backup": "<13.0.1",
                 "nonfiction/nterchange": "<4.1.1",
                 "notrinos/notrinos-erp": "<=0.7",
                 "noumo/easyii": "<=0.9",
@@ -11647,6 +11649,7 @@
                 "really-simple-plugins/complianz-gdpr": "<6.4.2",
                 "redaxo/source": "<5.18.3",
                 "remdex/livehelperchat": "<4.29",
+                "renolit/reint-downloadmanager": "<4.0.2|>=5,<5.0.1",
                 "reportico-web/reportico": "<=8.1",
                 "rhukster/dom-sanitizer": "<1.0.7",
                 "rmccue/requests": ">=1.6,<1.8",
@@ -11701,7 +11704,7 @@
                 "simplesamlphp/xml-security": "==1.6.11",
                 "simplito/elliptic-php": "<1.0.6",
                 "sitegeist/fluid-components": "<3.5",
-                "sjbr/sr-feuser-register": "<2.6.2",
+                "sjbr/sr-feuser-register": "<2.6.2|>=5.1,<12.5",
                 "sjbr/sr-freecap": "<2.4.6|>=2.5,<2.5.3",
                 "sjbr/static-info-tables": "<2.3.1",
                 "slim/psr7": "<1.4.1|>=1.5,<1.5.1|>=1.6,<1.6.1",
@@ -11775,6 +11778,8 @@
                 "symfony/translation": ">=2,<2.0.17",
                 "symfony/twig-bridge": ">=2,<4.4.51|>=5,<5.4.31|>=6,<6.3.8",
                 "symfony/ux-autocomplete": "<2.11.2",
+                "symfony/ux-live-component": "<2.25.1",
+                "symfony/ux-twig-component": "<2.25.1",
                 "symfony/validator": "<5.4.43|>=6,<6.4.11|>=7,<7.1.4",
                 "symfony/var-exporter": ">=4.2,<4.2.12|>=4.3,<4.3.8",
                 "symfony/web-profiler-bundle": ">=2,<2.3.19|>=2.4,<2.4.9|>=2.5,<2.5.4",
@@ -11812,10 +11817,10 @@
                 "twbs/bootstrap": "<=3.4.1|>=4,<=4.6.2",
                 "twig/twig": "<3.11.2|>=3.12,<3.14.1|>=3.16,<3.19",
                 "typo3/cms": "<9.5.29|>=10,<10.4.35|>=11,<11.5.23|>=12,<12.2",
-                "typo3/cms-backend": "<4.1.14|>=4.2,<4.2.15|>=4.3,<4.3.7|>=4.4,<4.4.4|>=7,<=7.6.50|>=8,<=8.7.39|>=9,<=9.5.24|>=10,<10.4.46|>=11,<11.5.40|>=12,<12.4.21|>=13,<13.3.1",
+                "typo3/cms-backend": "<4.1.14|>=4.2,<4.2.15|>=4.3,<4.3.7|>=4.4,<4.4.4|>=7,<=7.6.50|>=8,<=8.7.39|>=9,<=9.5.24|>=10,<10.4.46|>=11,<11.5.40|>=12,<=12.4.30|>=13,<=13.4.11",
                 "typo3/cms-belog": ">=10,<=10.4.47|>=11,<=11.5.41|>=12,<=12.4.24|>=13,<=13.4.2",
                 "typo3/cms-beuser": ">=10,<=10.4.47|>=11,<=11.5.41|>=12,<=12.4.24|>=13,<=13.4.2",
-                "typo3/cms-core": "<=8.7.56|>=9,<=9.5.48|>=10,<=10.4.47|>=11,<=11.5.41|>=12,<=12.4.24|>=13,<=13.4.2",
+                "typo3/cms-core": "<=8.7.56|>=9,<=9.5.50|>=10,<=10.4.49|>=11,<=11.5.43|>=12,<=12.4.30|>=13,<=13.4.11",
                 "typo3/cms-dashboard": ">=10,<=10.4.47|>=11,<=11.5.41|>=12,<=12.4.24|>=13,<=13.4.2",
                 "typo3/cms-extbase": "<6.2.24|>=7,<7.6.8|==8.1.1",
                 "typo3/cms-extensionmanager": ">=10,<=10.4.47|>=11,<=11.5.41|>=12,<=12.4.24|>=13,<=13.4.2",
@@ -11828,6 +11833,8 @@
                 "typo3/cms-lowlevel": ">=11,<=11.5.41",
                 "typo3/cms-rte-ckeditor": ">=9.5,<9.5.42|>=10,<10.4.39|>=11,<11.5.30",
                 "typo3/cms-scheduler": ">=11,<=11.5.41",
+                "typo3/cms-setup": ">=9,<=9.5.50|>=10,<=10.4.49|>=11,<=11.5.43|>=12,<=12.4.30|>=13,<=13.4.11",
+                "typo3/cms-webhooks": ">=12,<=12.4.30|>=13,<=13.4.11",
                 "typo3/flow": ">=1,<1.0.4|>=1.1,<1.1.1|>=2,<2.0.1|>=2.3,<2.3.16|>=3,<3.0.12|>=3.1,<3.1.10|>=3.2,<3.2.13|>=3.3,<3.3.13|>=4,<4.0.6",
                 "typo3/html-sanitizer": ">=1,<=1.5.2|>=2,<=2.1.3",
                 "typo3/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4|>=2.3,<2.3.99|>=3,<3.0.20|>=3.1,<3.1.18|>=3.2,<3.2.14|>=3.3,<3.3.23|>=4,<4.0.17|>=4.1,<4.1.16|>=4.2,<4.2.12|>=4.3,<4.3.3",
@@ -11977,7 +11984,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-05-17T16:05:20+00:00"
+            "time": "2025-05-20T20:06:01+00:00"
         },
         {
             "name": "sebastian/cli-parser",

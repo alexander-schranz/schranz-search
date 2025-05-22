@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50ad3f9f30d634792fdeccd7c7a311a3",
+    "content-hash": "010ceaf2593a6583f1f834cf1aab1afc",
     "packages": [
         {
             "name": "alexkart/curl-builder",
@@ -179,7 +179,7 @@
         },
         {
             "name": "cmsig/seal",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal",
@@ -276,14 +276,14 @@
         },
         {
             "name": "cmsig/seal-spiral-bridge",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../integrations/spiral",
-                "reference": "35ee14c003b1fa7c78e5e579df82f776fbc2d62d"
+                "reference": "552474af5aa2ccce9a6b6b83aae198e3933c6b05"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "spiral/boot": "^3.6",
                 "spiral/config": "^3.6",
@@ -291,33 +291,33 @@
                 "spiral/core": "^3.6"
             },
             "conflict": {
-                "cmsig/seal-algolia-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-elasticsearch-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-loupe-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-meilisearch-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-memory-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-multi-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-opensearch-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-read-write-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-redisearch-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-solr-adapter": "<0.8 || >=0.9",
-                "cmsig/seal-typesense-adapter": "<0.8 || >=0.9"
+                "cmsig/seal-algolia-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-elasticsearch-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-loupe-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-meilisearch-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-memory-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-multi-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-opensearch-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-read-write-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-redisearch-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-solr-adapter": "<0.9 || >=0.10",
+                "cmsig/seal-typesense-adapter": "<0.9 || >=0.10"
             },
             "replace": {
                 "schranz-search/spiral-bridge": "self.version"
             },
             "require-dev": {
-                "cmsig/seal-algolia-adapter": "^0.8",
-                "cmsig/seal-elasticsearch-adapter": "^0.8",
-                "cmsig/seal-loupe-adapter": "^0.8",
-                "cmsig/seal-meilisearch-adapter": "^0.8",
-                "cmsig/seal-memory-adapter": "^0.8",
-                "cmsig/seal-multi-adapter": "^0.8",
-                "cmsig/seal-opensearch-adapter": "^0.8",
-                "cmsig/seal-read-write-adapter": "^0.8",
-                "cmsig/seal-redisearch-adapter": "^0.8",
-                "cmsig/seal-solr-adapter": "^0.8",
-                "cmsig/seal-typesense-adapter": "^0.8",
+                "cmsig/seal-algolia-adapter": "^0.9",
+                "cmsig/seal-elasticsearch-adapter": "^0.9",
+                "cmsig/seal-loupe-adapter": "^0.9",
+                "cmsig/seal-meilisearch-adapter": "^0.9",
+                "cmsig/seal-memory-adapter": "^0.9",
+                "cmsig/seal-multi-adapter": "^0.9",
+                "cmsig/seal-opensearch-adapter": "^0.9",
+                "cmsig/seal-read-write-adapter": "^0.9",
+                "cmsig/seal-redisearch-adapter": "^0.9",
+                "cmsig/seal-solr-adapter": "^0.9",
+                "cmsig/seal-typesense-adapter": "^0.9",
                 "php-cs-fixer/shim": "^3.51",
                 "phpstan/extension-installer": "^1.2",
                 "phpstan/phpstan": "^1.10",
@@ -915,16 +915,16 @@
         },
         {
             "name": "google/common-protos",
-            "version": "4.12.0",
+            "version": "4.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/common-protos-php.git",
-                "reference": "96f6873c65fb0289fcdb6ac3d5239f9c9e5750b0"
+                "reference": "70c4eb1abab5484a23c17a43b0d455259f5d8c1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/common-protos-php/zipball/96f6873c65fb0289fcdb6ac3d5239f9c9e5750b0",
-                "reference": "96f6873c65fb0289fcdb6ac3d5239f9c9e5750b0",
+                "url": "https://api.github.com/repos/googleapis/common-protos-php/zipball/70c4eb1abab5484a23c17a43b0d455259f5d8c1b",
+                "reference": "70c4eb1abab5484a23c17a43b0d455259f5d8c1b",
                 "shasum": ""
             },
             "require": {
@@ -968,9 +968,9 @@
                 "google"
             ],
             "support": {
-                "source": "https://github.com/googleapis/common-protos-php/tree/v4.12.0"
+                "source": "https://github.com/googleapis/common-protos-php/tree/v4.12.1"
             },
-            "time": "2025-04-18T20:49:28+00:00"
+            "time": "2025-05-20T19:49:54+00:00"
         },
         {
             "name": "google/protobuf",
@@ -6950,15 +6950,15 @@
         },
         {
             "name": "cmsig/seal-algolia-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-algolia-adapter",
-                "reference": "2a8698c4ab6fa546e82ff0d783d6882a7abefa70"
+                "reference": "aed07da9e7405b9a8004b5916b27f456f3e3f407"
             },
             "require": {
                 "algolia/algoliasearch-client-php": "^4.4",
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
             },
@@ -7042,14 +7042,14 @@
         },
         {
             "name": "cmsig/seal-elasticsearch-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-elasticsearch-adapter",
-                "reference": "53278254e61f1dd4402405ee93f428a1994875b7"
+                "reference": "f099a07898f139d58c8f5878e87d38fe8d862b94"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "elasticsearch/elasticsearch": "^8.5.3 || ^9.0",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
@@ -7137,14 +7137,14 @@
         },
         {
             "name": "cmsig/seal-loupe-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-loupe-adapter",
-                "reference": "f48db741f4cd727d2ea411041f6b79b22e0d650f"
+                "reference": "711d6a3387dc2ebeb2360bf1bd7634e6346ffe26"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "loupe/loupe": "^0.11",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
@@ -7229,14 +7229,14 @@
         },
         {
             "name": "cmsig/seal-meilisearch-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-meilisearch-adapter",
-                "reference": "3cedc61a6a89c807f8cb0aa657d760a197e1028a"
+                "reference": "b610edcdfb14f992025114be7dfc9d5adfd76d08"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "meilisearch/meilisearch-php": "^1.2",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
@@ -7323,14 +7323,14 @@
         },
         {
             "name": "cmsig/seal-memory-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-memory-adapter",
-                "reference": "f14aaa8b1dfbdecd9a210f265406ab37a3033958"
+                "reference": "52a8c7875efee71da7b17ae11678ddb426fd336f"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1"
             },
             "replace": {
@@ -7412,14 +7412,14 @@
         },
         {
             "name": "cmsig/seal-multi-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-multi-adapter",
-                "reference": "a32e44e2ecdbb33127a29cab1bfe62bf32a7e45f"
+                "reference": "ad8e275da1168a8d4c45000a48f7607c5966f9f3"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
             },
@@ -7502,14 +7502,14 @@
         },
         {
             "name": "cmsig/seal-opensearch-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-opensearch-adapter",
-                "reference": "0ed5d9a76fad0b3f135b6361710d1245693a1532"
+                "reference": "9b98bc110351b4c075527f62574e205ebeea00a9"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "opensearch-project/opensearch-php": "^2.0",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
@@ -7598,14 +7598,14 @@
         },
         {
             "name": "cmsig/seal-read-write-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-read-write-adapter",
-                "reference": "eeaba807ea9d24e72ca7f233a59aca0a8481db6c"
+                "reference": "7ff514dbdef729c0dfec3afb1fb2ed3f8cf23207"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0"
             },
@@ -7688,14 +7688,14 @@
         },
         {
             "name": "cmsig/seal-redisearch-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-redisearch-adapter",
-                "reference": "8f872ed1d7763e92a57bf2e451438cc79aaf9434"
+                "reference": "491d56fa4d10a7d78a673ee08de81a943d95ffbc"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "ext-json": "*",
                 "ext-redis": "^5 || ^6.0",
                 "php": "^8.1",
@@ -7782,14 +7782,14 @@
         },
         {
             "name": "cmsig/seal-solr-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-solr-adapter",
-                "reference": "6e0ef0af9d17f0ffb0706c16e397311541e3bd74"
+                "reference": "2db75357a974b2662c04a381542202de9387c193"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0",
                 "solarium/solarium": "^6.3"
@@ -7879,14 +7879,14 @@
         },
         {
             "name": "cmsig/seal-typesense-adapter",
-            "version": "0.8.x-dev",
+            "version": "0.9.x-dev",
             "dist": {
                 "type": "path",
                 "url": "./../../packages/seal-typesense-adapter",
-                "reference": "7d7da626ba02bd24b25334f9365468d6d22fcf2b"
+                "reference": "6397bf2f92e7eefcbcf0ce4c3088e04a5ea336a2"
             },
             "require": {
-                "cmsig/seal": "^0.8",
+                "cmsig/seal": "^0.9",
                 "php": "^8.1",
                 "psr/container": "^1.0 || ^2.0",
                 "symfony/http-client": "^5.4 || ^6.0 || ^7.0",
@@ -10610,16 +10610,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.26",
+            "version": "1.12.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "84cbf8f018e01834b9b1ac3dacf3b9780e209e53"
+                "reference": "3a6e423c076ab39dfedc307e2ac627ef579db162"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/84cbf8f018e01834b9b1ac3dacf3b9780e209e53",
-                "reference": "84cbf8f018e01834b9b1ac3dacf3b9780e209e53",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3a6e423c076ab39dfedc307e2ac627ef579db162",
+                "reference": "3a6e423c076ab39dfedc307e2ac627ef579db162",
                 "shasum": ""
             },
             "require": {
@@ -10664,7 +10664,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-14T11:08:32+00:00"
+            "time": "2025-05-21T20:51:45+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
