@@ -94,6 +94,10 @@ final class MeilisearchSearcher implements SearcherInterface
             $searchParams['highlightPostTag'] = $search->highlightPostTag;
         }
 
+        if (null !== $search->distinct) {
+            $searchParams['distinct'] = $search->distinct;
+        }
+
         $data = $searchIndex->search($query, $searchParams)->toArray();
 
         return new Result(
