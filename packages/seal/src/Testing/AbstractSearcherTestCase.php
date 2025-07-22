@@ -19,6 +19,8 @@ use CmsIg\Seal\Adapter\SchemaManagerInterface;
 use CmsIg\Seal\Adapter\SearcherInterface;
 use CmsIg\Seal\Schema\Schema;
 use CmsIg\Seal\Search\Condition;
+use CmsIg\Seal\Search\Facet\CountFacet;
+use CmsIg\Seal\Search\Facet\MinMaxFacet;
 use CmsIg\Seal\Search\SearchBuilder;
 use PHPUnit\Framework\TestCase;
 
@@ -107,6 +109,78 @@ abstract class AbstractSearcherTestCase extends TestCase
         $loadedDocuments = [...$search->getResult()];
         $this->assertCount(1, $loadedDocuments);
         $this->assertSame(0, $loadedDocuments[0]['commentsCount']);
+
+        foreach ($documents as $document) {
+            self::$taskHelper->tasks[] = self::$indexer->delete(
+                $schema->indexes[TestingHelper::INDEX_COMPLEX],
+                $document['uuid'],
+                ['return_slow_promise_result' => true],
+            );
+        }
+    }
+
+    public function testFacetSearch(): void
+    {
+        $documents = TestingHelper::createComplexFixtures();
+
+        $schema = self::getSchema();
+
+        foreach ($documents as $document) {
+            self::$taskHelper->tasks[] = self::$indexer->save(
+                $schema->indexes[TestingHelper::INDEX_COMPLEX],
+                $document,
+                ['return_slow_promise_result' => true],
+            );
+        }
+        self::$taskHelper->waitForAll();
+
+        $search = new SearchBuilder($schema, self::$searcher);
+        $search->index(TestingHelper::INDEX_COMPLEX);
+        $search->addFacet(new MinMaxFacet(field: 'rating'));
+        $search->addFacet(new CountFacet(field: 'tags'));
+        $search->addSortBy('title', 'asc');
+
+        $facets = $search->getResult()->facets();
+        TestingHelper::recursiveKeySort($facets);
+
+        $this->assertSame([
+            'rating' => [
+                'max' => 3.5,
+                'min' => 2.5,
+            ],
+            'tags' => [
+                'count' => [
+                    'Tech' => 2,
+                    'UI' => 2,
+                    'UX' => 2,
+                ]
+            ],
+        ], $facets);
+
+        $search = new SearchBuilder($schema, self::$searcher);
+        $search->index(TestingHelper::INDEX_COMPLEX);
+        $search->addFilter(new Condition\SearchCondition('Blog'));
+        $search->addFacet(new MinMaxFacet(field: 'rating'));
+        $search->addFacet(new CountFacet(field: 'tags'));
+        $search->addSortBy('title', 'asc');
+
+        $facets = $search->getResult()->facets();
+        TestingHelper::recursiveKeySort($facets);
+
+        $this->assertSame([
+            'rating' => [
+                'max' => 3.5,
+                'min' => 2.5,
+            ],
+            'tags' => [
+                'count' => [
+                    'Tech' => 1,
+                    'UI' => 2,
+                    'UX' => 1,
+                ]
+            ],
+        ], $facets);
+
 
         foreach ($documents as $document) {
             self::$taskHelper->tasks[] = self::$indexer->delete(

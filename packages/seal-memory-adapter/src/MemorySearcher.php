@@ -18,6 +18,8 @@ use CmsIg\Seal\Marshaller\Marshaller;
 use CmsIg\Seal\Schema\Field;
 use CmsIg\Seal\Schema\Index;
 use CmsIg\Seal\Search\Condition;
+use CmsIg\Seal\Search\Facet\CountFacet;
+use CmsIg\Seal\Search\Facet\MinMaxFacet;
 use CmsIg\Seal\Search\Result;
 use CmsIg\Seal\Search\Search;
 
@@ -86,7 +88,7 @@ final class MemorySearcher implements SearcherInterface
                     return $docB[$field] <=> $docA[$field];
                 }
 
-                return $docA[$field] <=> $docB[$field];
+                return $docA[$field] ?? null <=> $docB[$field] ?? null;
             });
         }
 
@@ -137,6 +139,7 @@ final class MemorySearcher implements SearcherInterface
         return new Result(
             $generator(),
             \count($documents),
+            $this->generateFacets($documents, $search),
         );
     }
 
@@ -502,5 +505,40 @@ final class MemorySearcher implements SearcherInterface
         }
 
         return $documents;
+    }
+
+    /**
+     * @param array<array<string, mixed>> $documents
+     */
+    private function generateFacets(array $documents, Search $search): array
+    {
+        $facets = [];
+
+        foreach ($documents as $document) {
+            foreach ($search->facets as $facet) {
+                if (!isset($document[$facet->field])) {
+                    continue;
+                }
+
+                if ($facet instanceof CountFacet) {
+                    if (is_array($document[$facet->field])) {
+                        foreach ($document[$facet->field] as $value) {
+                            if (!isset($facets[$facet->field]['count'][$value])) {
+                                $facets[$facet->field]['count'][$value] = 0;
+                            }
+
+                            $facets[$facet->field]['count'][$value]++;
+                        }
+                    }
+                }
+
+                if ($facet instanceof MinMaxFacet) {
+                    $facets[$facet->field]['min'] = min($facets[$facet->field]['min'] ?? $document[$facet->field], $document[$facet->field]);
+                    $facets[$facet->field]['max'] = max($facets[$facet->field]['max'] ?? $document[$facet->field], $document[$facet->field]);
+                }
+            }
+        }
+
+        return $facets;
     }
 }
