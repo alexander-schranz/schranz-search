@@ -6,7 +6,7 @@ parameters:
 			path: config/common/di/application-parameters.php
 
 		-
-			message: "#^Variable \\$params might not be defined\\.$#"
+			message: "#^PHPDoc tag @var for variable \\$params has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: config/common/di/i18n.php
 
