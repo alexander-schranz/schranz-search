@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Yiisoft\I18n\Locale;
 
-/** @var $params array */
+/** @var array $params */
 
 return [
     Locale::class => [
