@@ -12,6 +12,7 @@ $finder = (new PhpCsFixer\Finder())
         __DIR__ . '/public',
         __DIR__ . '/tests',
     ])
+    ->notPath('#reference\.php$#')
     ->ignoreVCSIgnored(true);
 
 $phpCsConfig->setFinder($finder);
