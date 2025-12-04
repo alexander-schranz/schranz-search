@@ -30,6 +30,9 @@ jobs:
                     - php-version: '8.4'
                       dependency-versions: 'highest'
 
+                    - php-version: '8.5'
+                      dependency-versions: 'highest'
+
         steps:
             - name: Output infos
               run: |
