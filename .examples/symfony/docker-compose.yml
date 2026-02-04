@@ -1,6 +1,6 @@
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:9.2.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.3.0
     environment:
       discovery.type: single-node
       xpack.security.enabled: 'false'
@@ -63,7 +63,7 @@ services:
       - "redis"
 
   typesense:
-    image: typesense/typesense:30.0
+    image: typesense/typesense:30.1
     ports:
       - "8108:8108"
     environment:
