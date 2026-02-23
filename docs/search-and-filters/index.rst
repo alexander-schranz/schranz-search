@@ -66,7 +66,7 @@ The ``EqualCondition`` is used to filter the result by a specific field value ma
         ->getResult();
 
 The field is required to be marked as ``filterable`` in the index configuration, it can be also
-used on fields which are not marked as ``multiple``.
+used on fields which are marked as ``multiple``.
 
 NotEqualCondition
 ~~~~~~~~~~~~~~~~~
@@ -84,7 +84,7 @@ The ``NotEqualCondition`` is used to filter the result by a specific field value
         ->getResult();
 
 The field is required to be marked as ``filterable`` in the index configuration, it can be also
-used on fields which are not marked as ``multiple``.
+used on fields which are marked as ``multiple``.
 
 IdentifierCondition
 ~~~~~~~~~~~~~~~~~~~
@@ -102,6 +102,42 @@ then using a ``EqualCondition``.
     $result = $this->engine->createSearchBuilder('blog')
         ->addFilter(Condition::identifier('23b30f01-d8fd-4dca-b36a-4710e360a965'))
         ->getResult();
+
+InCondition
+~~~~~~~~~~~
+
+The ``InCondition`` is used to filter the result by a specific field value matching one of the given values.
+
+.. code-block:: php
+
+    <?php
+
+    use CmsIg\Seal\Search\Condition\Condition;
+
+    $result = $this->engine->createSearchBuilder('blog')
+        ->addFilter(Condition::in('tags', ['UI', 'UX']))
+        ->getResult();
+
+The field is required to be marked as ``filterable`` in the index configuration, it can be also
+used on fields which are marked as ``multiple``.
+
+NotInCondition
+~~~~~~~~~~~~~~
+
+The ``NotInCondition`` is used to filter the result by a specific field value not matching one of the a given values.
+
+.. code-block:: php
+
+    <?php
+
+    use CmsIg\Seal\Search\Condition\Condition;
+
+    $result = $this->engine->createSearchBuilder('blog')
+        ->addFilter(Condition::notIn('tags', ['UI', 'UX']))
+        ->getResult();
+
+The field is required to be marked as ``filterable`` in the index configuration, it can be also
+used on fields which are marked as ``multiple``.
 
 GreaterThanCondition
 ~~~~~~~~~~~~~~~~~~~~
