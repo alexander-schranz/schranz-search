@@ -16,6 +16,7 @@ namespace CmsIg\Seal\Adapter\MongoDB;
 use CmsIg\Seal\Adapter\BulkHelper;
 use CmsIg\Seal\Adapter\IndexerInterface;
 use CmsIg\Seal\Marshaller\Marshaller;
+use CmsIg\Seal\Schema\Field\GeoPointField;
 use CmsIg\Seal\Schema\Index;
 use CmsIg\Seal\Task\SyncTask;
 use CmsIg\Seal\Task\TaskInterface;
@@ -44,6 +45,7 @@ final class MongoDBIndexer implements IndexerInterface
         unset($document[$identifierField->name]);
 
         $document = $this->marshaller->marshall($index->fields, $document);
+        $document = $this->convertGeoPointToMongoDocument($index, $document);
         $document['_id'] = $identifier;
 
         $this->client->getDatabase()
@@ -73,31 +75,47 @@ final class MongoDBIndexer implements IndexerInterface
     public function bulk(Index $index, iterable $saveDocuments, iterable $deleteDocumentIdentifiers, int $bulkSize = 100, array $options = []): TaskInterface|null
     {
         $identifierField = $index->getIdentifierField();
+        $collection = $this->client->getDatabase()->getCollection($index->name);
 
         foreach (BulkHelper::splitBulk($saveDocuments, $bulkSize) as $bulkSaveDocuments) {
-            $documents = [];
-            foreach ($bulkSaveDocuments as $document) {
-                $document = $this->marshaller->marshall($index->fields, $document);
+            $operations = [];
 
-                /** @var string|int|null $identifier */
+            foreach ($bulkSaveDocuments as $document) {
                 $identifier = $document[$identifierField->name] ?? null;
                 unset($document[$identifierField->name]);
+
+                $document = $this->marshaller->marshall($index->fields, $document);
+                $document = $this->convertGeoPointToMongoDocument($index, $document);
                 $document['_id'] = $identifier;
 
-                $documents[] = $document;
+                $operations[] = [
+                    'replaceOne' => [
+                        ['_id' => $identifier],
+                        $document,
+                        ['upsert' => true],
+                    ],
+                ];
             }
 
-            $this->client->getDatabase()
-                ->getCollection($index->name)
-                ->insertMany($documents);
+            if ([] !== $operations) {
+                $collection->bulkWrite($operations, ['ordered' => true]);
+            }
         }
 
         foreach (BulkHelper::splitBulk($deleteDocumentIdentifiers, $bulkSize) as $bulkDeleteDocumentIdentifiers) {
-            $this->client->getDatabase()
-                ->getCollection($index->name)
-                ->deleteMany([
-                    '_id' => ['$in' => $bulkDeleteDocumentIdentifiers],
-                ]);
+            $operations = [];
+
+            foreach ($bulkDeleteDocumentIdentifiers as $deleteDocumentIdentifier) {
+                $operations[] = [
+                    'deleteOne' => [
+                        ['_id' => $deleteDocumentIdentifier],
+                    ],
+                ];
+            }
+
+            if ([] !== $operations) {
+                $collection->bulkWrite($operations, ['ordered' => true]);
+            }
         }
 
         if (!($options['return_slow_promise_result'] ?? false)) {
@@ -105,5 +123,34 @@ final class MongoDBIndexer implements IndexerInterface
         }
 
         return new SyncTask(null);
+    }
+
+    /**
+     * @param array<string, mixed> $document
+     *
+     * @return array<string, mixed>
+     */
+    private function convertGeoPointToMongoDocument(Index $index, array $document): array
+    {
+        $geoPointField = $index->getGeoPointField();
+
+        if (!$geoPointField instanceof GeoPointField || !isset($document[$geoPointField->name]) || !\is_array($document[$geoPointField->name])) {
+            return $document;
+        }
+
+        $geoPoint = $document[$geoPointField->name];
+        $latitude = $geoPoint['lat'] ?? null;
+        $longitude = $geoPoint['lon'] ?? null;
+
+        if (!\is_numeric($latitude) || !\is_numeric($longitude)) {
+            return $document;
+        }
+
+        $document[$geoPointField->name] = [
+            'type' => 'Point',
+            'coordinates' => [(float) $longitude, (float) $latitude],
+        ];
+
+        return $document;
     }
 }

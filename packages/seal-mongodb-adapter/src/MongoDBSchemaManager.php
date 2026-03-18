@@ -16,9 +16,8 @@ namespace CmsIg\Seal\Adapter\MongoDB;
 use CmsIg\Seal\Adapter\SchemaManagerInterface;
 use CmsIg\Seal\Schema\Field;
 use CmsIg\Seal\Schema\Index;
-use CmsIg\Seal\Task\SyncTask;
+use CmsIg\Seal\Task\AsyncTask;
 use CmsIg\Seal\Task\TaskInterface;
-use MongoDB\Response\MongoDB;
 
 final class MongoDBSchemaManager implements SchemaManagerInterface
 {
@@ -36,24 +35,53 @@ final class MongoDBSchemaManager implements SchemaManagerInterface
 
     public function dropIndex(Index $index, array $options = []): TaskInterface|null
     {
-        $this->client->getDatabase()->dropCollection($index->name);
-        $this->client->getDatabase()->getCollection($index->name)->dropSearchIndex($index->name . '-search-index');
+        $database = $this->client->getDatabase();
+        $database->dropCollection($index->name);
 
         if (!($options['return_slow_promise_result'] ?? false)) {
             return null;
         }
 
-        return new SyncTask(null); // TODO wait for index drop
+        return new AsyncTask(function () use ($index): null {
+            $this->waitForSearchIndexState($index, false);
+
+            return null;
+        });
     }
 
     public function createIndex(Index $index, array $options = []): TaskInterface|null
     {
-        // $searchDefinition = $this->createPropertiesMapping($index->fields);
+        $database = $this->client->getDatabase();
+        $indexConfig = $this->createIndexConfig($index->fields);
 
-        $this->client->getDatabase()->createCollection($index->name);  // TODO check with mongodb team how we could add stricter schema / validator
+        $validator = [
+            '$jsonSchema' => [
+                'bsonType' => 'object',
+                'properties' => $indexConfig['properties'],
+                'additionalProperties' => true,
+            ],
+        ];
 
-        $this->client->getDatabase()->getCollection($index->name)->createSearchIndex(
-            ['mappings' => ['dynamic' => true]], // TODO check with mongodb team how to add a strict schema
+        $database->createCollection($index->name, [
+            'validator' => $validator,
+        ]);
+
+        $collection = $database->getCollection($index->name);
+        foreach ($indexConfig['indexes'] as $indexName => $indexType) {
+            $collection->createIndex([
+                $indexName => $indexType,
+            ]);
+        }
+
+        $searchDefinition = [
+            'mappings' => [
+                'dynamic' => false,
+                'fields' => $indexConfig['mappingFields'],
+            ],
+        ];
+
+        $collection->createSearchIndex(
+            $searchDefinition,
             ['name' => $index->name . '-search-index'],
         );
 
@@ -61,98 +89,232 @@ final class MongoDBSchemaManager implements SchemaManagerInterface
             return null;
         }
 
-        return new SyncTask(null); // TODO wait for index create
+        return new AsyncTask(function () use ($index): null {
+            $this->waitForSearchIndexState($index, true);
+
+            return null;
+        });
+    }
+
+    private function waitForSearchIndexState(Index $index, bool $shouldExist): void
+    {
+        $collection = $this->client->getDatabase()->getCollection($index->name);
+        $searchIndexName = $index->name . '-search-index';
+
+        for ($attempt = 0; $attempt < 600; ++$attempt) {
+            if (!$this->existIndex($index)) {
+                if (!$shouldExist) {
+                    return;
+                }
+
+                \usleep(100_000);
+                continue;
+            }
+
+            $foundSearchIndex = false;
+            try {
+                foreach ($collection->listSearchIndexes([
+                    'typeMap' => [
+                        'root' => 'array',
+                        'document' => 'array',
+                    ],
+                ]) as $searchIndex) {
+                    if (!\is_array($searchIndex)) {
+                        continue;
+                    }
+
+                    if (($searchIndex['name'] ?? null) !== $searchIndexName) {
+                        continue;
+                    }
+
+                    $foundSearchIndex = true;
+                    $queryable = true === ($searchIndex['queryable'] ?? null) || 'READY' === ($searchIndex['status'] ?? null);
+
+                    if ($shouldExist && $queryable) {
+                        return;
+                    }
+                }
+            } catch (\Throwable) {
+                if (!$shouldExist) {
+                    return;
+                }
+            }
+
+            if (!$shouldExist && !$foundSearchIndex) {
+                return;
+            }
+
+            \usleep(100_000);
+        }
+
+        throw new \RuntimeException(\sprintf(
+            'Search index "%s" in "%s" did not reach expected state (%s).',
+            $searchIndexName,
+            $index->name,
+            $shouldExist ? 'queryable' : 'removed',
+        ));
     }
 
     /**
-     * @param Field\AbstractField[] $fields
+     * @param array<string, Field\AbstractField> $fields
      *
-     * @return array<string, mixed>
+     * @return array{
+     *     properties: array<string, mixed>,
+     *     mappingFields: array<string, mixed>,
+     *     indexes: array<string, string>,
+     * }
      */
-    private function createPropertiesMapping(array $fields): array
+    private function createIndexConfig(array $fields, bool $collectGeoIndexFields = true): array
     {
+        /** @var array<string, mixed> $properties */
         $properties = [];
+        /** @var array<string, mixed> $mappingFields */
+        $mappingFields = [];
+        /** @var array<string, string> $indexes */
+        $indexes = [];
 
         foreach ($fields as $name => $field) {
             match (true) {
                 $field instanceof Field\IdentifierField => $properties[$name] = [
-                    '$type' => 'string',
-                    // TODO
-                    // 'index' => $field->searchable,
-                    // 'doc_values' => $field->filterable || $field->sortable,
+                    'bsonType' => ['string', 'null'],
                 ],
-                $field instanceof Field\TextField => $properties[$name] = [
-                    '$type' => 'string',
-                    // TODO
-                    // 'index' => $field->searchable,
-                    // 'doc_values' => $field->filterable || $field->sortable,
+                $field instanceof Field\TextField => $properties[$name] = $field->multiple ? [
+                    'bsonType' => ['array', 'null'],
+                    'items' => [
+                        'bsonType' => ['string', 'null'],
+                    ],
+                ] : [
+                    'bsonType' => ['string', 'null'],
                 ],
-                $field instanceof Field\BooleanField => $properties[$name] = [
-                    '$type' => 'boolean',
-                    // TODO
-                    // 'index' => $field->searchable,
-                    // 'doc_values' => $field->filterable || $field->sortable,
+                $field instanceof Field\BooleanField => $properties[$name] = $field->multiple ? [
+                    'bsonType' => ['array', 'null'],
+                    'items' => [
+                        'bsonType' => ['bool', 'null'],
+                    ],
+                ] : [
+                    'bsonType' => ['bool', 'null'],
                 ],
-                $field instanceof Field\DateTimeField => $properties[$name] = [
-                    '$type' => 'date',
-                    // TODO
-                    // 'index' => $field->searchable,
-                    // 'doc_values' => $field->filterable || $field->sortable,
+                $field instanceof Field\DateTimeField => $properties[$name] = $field->multiple ? [
+                    'bsonType' => ['array', 'null'],
+                    'items' => [
+                        'bsonType' => ['string', 'null'],
+                    ],
+                ] : [
+                    'bsonType' => ['string', 'null'],
                 ],
-                $field instanceof Field\IntegerField => $properties[$name] = [
-                    '$type' => 'integer',
-                    // TODO
-                    // 'index' => $field->searchable,
-                    // 'doc_values' => $field->filterable || $field->sortable,
+                $field instanceof Field\IntegerField => $properties[$name] = $field->multiple ? [
+                    'bsonType' => ['array', 'null'],
+                    'items' => [
+                        'bsonType' => ['int', 'null'],
+                    ],
+                ] : [
+                    'bsonType' => ['int', 'null'],
                 ],
-                $field instanceof Field\FloatField => $properties[$name] = [
-                    '$type' => 'number',
-                    // TODO
-                    // 'index' => $field->searchable,
-                    // 'doc_values' => $field->filterable || $field->sortable,
+                $field instanceof Field\FloatField => $properties[$name] = $field->multiple ? [
+                    'bsonType' => ['array', 'null'],
+                    'items' => [
+                        'bsonType' => ['double', 'null'],
+                    ],
+                ] : [
+                    'bsonType' => ['double', 'null'],
                 ],
                 $field instanceof Field\GeoPointField => $properties[$name] = [
-                    '$type' => 'Point',
-                    // TODO
-                    // 'index' => $field->searchable,
-                    // 'doc_values' => $field->filterable || $field->sortable,
+                    'bsonType' => ['object', 'null'],
+                    'properties' => [
+                        'type' => ['bsonType' => 'string'],
+                        'coordinates' => ['bsonType' => 'array'],
+                    ],
+                    'additionalProperties' => true,
                 ],
-                $field instanceof Field\ObjectField => $properties[$name] = [
-                    '$type' => 'object',
-                    'properties' => $this->createPropertiesMapping($field->fields),
+                $field instanceof Field\ObjectField => $properties[$name] = $this->createObjectProperties($field),
+                $field instanceof Field\JsonObjectField => $properties[$name] = [
+                    'bsonType' => ['string', 'null'],
                 ],
-                $field instanceof Field\TypedField => $properties = \array_replace($properties, $this->createTypedFieldMapping($name, $field)),
-                default => throw new \RuntimeException(\sprintf('Field type "%s" is not supported.', $field::class)),
+                $field instanceof Field\TypedField => $properties[$name] = $this->createTypedProperties($field),
+                default => $properties[$name] = ['bsonType' => ['null']],
             };
+
+            if (($field instanceof Field\TextField || $field instanceof Field\IdentifierField) && $field->searchable) {
+                $mappingFields[$name] = ['type' => 'string'];
+            }
+
+            if ($field instanceof Field\ObjectField) {
+                $objectConfig = $this->createIndexConfig($field->fields, false);
+                if ([] !== $objectConfig['mappingFields']) {
+                    $mappingFields[$name] = [
+                        'type' => 'document',
+                        'fields' => $objectConfig['mappingFields'],
+                    ];
+                }
+            }
+
+            if ($field instanceof Field\TypedField) {
+                $typedMappingFields = [];
+
+                foreach ($field->types as $type => $typedFields) {
+                    $typedConfig = $this->createIndexConfig($typedFields, false);
+                    if ([] !== $typedConfig['mappingFields']) {
+                        $typedMappingFields[$type] = [
+                            'type' => 'document',
+                            'fields' => $typedConfig['mappingFields'],
+                        ];
+                    }
+                }
+
+                if ([] !== $typedMappingFields) {
+                    $mappingFields[$name] = [
+                        'type' => 'document',
+                        'fields' => $typedMappingFields,
+                    ];
+                }
+            }
+
+            if ($collectGeoIndexFields && $field instanceof Field\GeoPointField) {
+                $indexes[$name] = '2dsphere';
+            }
         }
 
-        return $properties;
+        return [
+            'properties' => $properties,
+            'mappingFields' => $mappingFields,
+            'indexes' => $indexes,
+        ];
     }
 
     /**
      * @return array<string, mixed>
      */
-    private function createTypedFieldMapping(string $name, Field\TypedField $field): array
+    private function createObjectProperties(Field\ObjectField $field): array
+    {
+        $objectConfig = $this->createIndexConfig($field->fields, false);
+
+        return [
+            'bsonType' => ['object', 'array', 'null'],
+            'properties' => $objectConfig['properties'],
+            'additionalProperties' => true,
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function createTypedProperties(Field\TypedField $field): array
     {
         $typedProperties = [];
 
         foreach ($field->types as $type => $fields) {
+            $typedConfig = $this->createIndexConfig($fields, false);
             $typedProperties[$type] = [
-                'type' => 'object',
-                'properties' => $this->createPropertiesMapping($fields),
+                'bsonType' => ['object', 'array', 'null'],
+                'properties' => $typedConfig['properties'],
+                'additionalProperties' => true,
             ];
-
-            if ($field->multiple) {
-                $typedProperties[$type]['properties']['_originalIndex'] = [
-                    'type' => 'integer',
-                    'index' => false,
-                ];
-            }
         }
 
-        return [$name => [
-            'type' => 'object',
+        return [
+            'bsonType' => ['object', 'array', 'null'],
             'properties' => $typedProperties,
-        ]];
+            'additionalProperties' => true,
+        ];
     }
 }

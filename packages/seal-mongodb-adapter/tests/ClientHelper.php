@@ -23,9 +23,13 @@ final class ClientHelper
     public static function getClient(): ClientWrapper
     {
         if (!self::$client instanceof ClientWrapper) {
-            self::$client = new ClientWrapper(new Client(
-                $_ENV['MONGODB_URL'] ?? 'mongodb://localhost:27017',
-            ), $_ENV['MONGODB_DB'] ?? 'default');
+            $mongodbUrl = $_ENV['MONGODB_URL'] ?? 'mongodb://localhost:27017';
+            \assert(\is_string($mongodbUrl), 'MONGODB_URL should be a string.');
+
+            $mongodbDatabase = $_ENV['MONGODB_DB'] ?? 'default';
+            \assert(\is_string($mongodbDatabase), 'MONGODB_DB should be a string.');
+
+            self::$client = new ClientWrapper(new Client($mongodbUrl), $mongodbDatabase);
         }
 
         return self::$client;

@@ -28,6 +28,18 @@ class MongoDBAdapterFactory implements AdapterFactoryInterface
     ) {
     }
 
+    /**
+     * @param array{
+     *     scheme: string,
+     *     host: string,
+     *     port?: int,
+     *     user?: string,
+     *     pass?: string,
+     *     path?: string,
+     *     query: array<string, string|string[]>,
+     *     fragment?: string,
+     * } $dsn
+     */
     public function createAdapter(array $dsn): AdapterInterface
     {
         $client = $this->createClient($dsn);
@@ -45,12 +57,17 @@ class MongoDBAdapterFactory implements AdapterFactoryInterface
      *     user?: string,
      *     pass?: string,
      *     path?: string,
-     *     query: array<string, string>,
+     *     query: array<string, string|string[]>,
      *     fragment?: string,
      * } $dsn
      */
     public function createClient(array $dsn): ClientWrapper
     {
+        $databaseName = \ltrim($dsn['path'] ?? '/default', '/');
+        if ('' === $databaseName) {
+            $databaseName = 'default';
+        }
+
         if ('' === $dsn['host']) {
             $client = $this->container?->get(Client::class);
 
@@ -58,13 +75,16 @@ class MongoDBAdapterFactory implements AdapterFactoryInterface
                 throw new \InvalidArgumentException('Unknown MongoDB client.');
             }
 
-            return $client;
+            return new ClientWrapper($client, $databaseName);
         }
 
         $dsnUri = 'mongodb://';
 
-        if (isset($dsn['user']) || isset($dsn['pass'])) {
-            $dsnUri .= $dsn['user'] . ':' . $dsn['pass'] . '@';
+        $user = $dsn['user'] ?? '';
+        $pass = $dsn['pass'] ?? '';
+
+        if ('' !== $user || '' !== $pass) {
+            $dsnUri .= $user . ':' . $pass . '@';
         }
 
         $dsnUri .= $dsn['host'];
@@ -72,12 +92,10 @@ class MongoDBAdapterFactory implements AdapterFactoryInterface
             $dsnUri .= ':' . $dsn['port'];
         }
 
-        \assert(!isset($dsn['path']), 'A selected database is required.');
-        $databaseName = \ltrim($dsn['path'] ?? 'default', '/');
-
-        if (isset($dsn['query'])) {
+        if ([] !== $dsn['query']) {
             $dsnUri .= '?' . \http_build_query($dsn['query']);
         }
+
         if (isset($dsn['fragment'])) {
             $dsnUri .= '#' . $dsn['fragment'];
         }
