@@ -56,13 +56,13 @@ Reindex operations
 
 To reindex documents it is required to create atleast one ReindexProvider for
 the index you want to reindex. The ReindexProvider is a class which implements
-the ``ReindexProviderInterface`` and provides the documents for your index.
+the ``StaticReindexProviderInterface`` and provides the documents for your index.
 
 .. code-block:: php
 
     <?php
 
-    class BlogReindexProvider implements ReindexProviderInterface
+    class BlogReindexProvider implements StaticReindexProviderInterface
     {
         public function total(): ?int
         {
@@ -93,7 +93,7 @@ the ``ReindexProviderInterface`` and provides the documents for your index.
             ];
         }
 
-        public static function getIndex(): string
+        public function getIndexName(): string
         {
             return 'blog';
         }
