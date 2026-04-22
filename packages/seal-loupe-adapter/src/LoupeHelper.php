@@ -79,9 +79,14 @@ final class LoupeHelper
 
     public function createIndex(Index $index): void
     {
-        $configuration = $this->createAndDumpConfiguration($index);
-        \file_put_contents($this->getConfigurationFile($index), \serialize($configuration));
+        $configuration = $this->createConfiguration($index);
         $this->loupe[$index->name] = $this->createLoupe($index, $configuration);
+
+        if ('' === $this->directory) {
+            return;
+        }
+
+        \file_put_contents($this->getConfigurationFile($index), \serialize($configuration));
     }
 
     public function reset(): void
