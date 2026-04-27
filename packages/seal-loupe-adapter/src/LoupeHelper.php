@@ -26,7 +26,12 @@ final class LoupeHelper
     public const SEPARATOR = '_';
 
     /**
-     * @var Loupe[]
+     * @var array<string, Configuration>
+     */
+    private static array $inMemoryConfigurations = [];
+
+    /**
+     * @var array<string, Loupe>
      */
     private array $loupe = [];
 
@@ -50,6 +55,10 @@ final class LoupeHelper
 
     public function existIndex(Index $index): bool
     {
+        if ('' === $this->directory) {
+            return isset(self::$inMemoryConfigurations[$index->name]);
+        }
+
         $indexDirectory = $this->getIndexDirectory($index);
 
         return \file_exists($indexDirectory);
@@ -57,6 +66,12 @@ final class LoupeHelper
 
     public function dropIndex(Index $index): void
     {
+        unset($this->loupe[$index->name], self::$inMemoryConfigurations[$index->name]);
+
+        if ('' === $this->directory) {
+            return;
+        }
+
         if ($this->existIndex($index)) {
             $indexDirectory = $this->getIndexDirectory($index);
 
@@ -81,6 +96,7 @@ final class LoupeHelper
     {
         $configuration = $this->createConfiguration($index);
         $this->loupe[$index->name] = $this->createLoupe($index, $configuration);
+        self::$inMemoryConfigurations[$index->name] = $configuration;
 
         if ('' === $this->directory) {
             return;
@@ -105,16 +121,20 @@ final class LoupeHelper
     private function createLoupe(Index $index, Configuration|null $configuration = null): Loupe
     {
         if (!$configuration instanceof Configuration) {
-            $configurationFile = $this->getConfigurationFile($index);
-
-            if (!\file_exists($configurationFile)) {
-                $configuration = $this->createAndDumpConfiguration($index);
+            if ('' === $this->directory) {
+                $configuration = self::$inMemoryConfigurations[$index->name] ?? $this->createConfiguration($index);
             } else {
-                /** @var string $configurationContent */
-                $configurationContent = \file_get_contents($configurationFile);
+                $configurationFile = $this->getConfigurationFile($index);
 
-                /** @var Configuration $configuration */
-                $configuration = \unserialize($configurationContent);
+                if (!\file_exists($configurationFile)) {
+                    $configuration = $this->createAndDumpConfiguration($index);
+                } else {
+                    /** @var string $configurationContent */
+                    $configurationContent = \file_get_contents($configurationFile);
+
+                    /** @var Configuration $configuration */
+                    $configuration = \unserialize($configurationContent);
+                }
             }
         }
 
