@@ -28,7 +28,7 @@ final class LoupeHelper
     /**
      * @var array<string, Configuration>
      */
-    private static array $inMemoryConfigurations = [];
+    private array $inMemoryConfigurations = [];
 
     /**
      * @var array<string, Loupe>
@@ -56,7 +56,7 @@ final class LoupeHelper
     public function existIndex(Index $index): bool
     {
         if ('' === $this->directory) {
-            return isset(self::$inMemoryConfigurations[$index->name]);
+            return isset($this->inMemoryConfigurations[$index->name]);
         }
 
         $indexDirectory = $this->getIndexDirectory($index);
@@ -66,9 +66,11 @@ final class LoupeHelper
 
     public function dropIndex(Index $index): void
     {
-        unset($this->loupe[$index->name], self::$inMemoryConfigurations[$index->name]);
+        unset($this->loupe[$index->name]);
 
         if ('' === $this->directory) {
+            unset($this->inMemoryConfigurations[$index->name]);
+
             return;
         }
 
@@ -96,9 +98,10 @@ final class LoupeHelper
     {
         $configuration = $this->createConfiguration($index);
         $this->loupe[$index->name] = $this->createLoupe($index, $configuration);
-        self::$inMemoryConfigurations[$index->name] = $configuration;
 
         if ('' === $this->directory) {
+            $this->inMemoryConfigurations[$index->name] = $configuration;
+
             return;
         }
 
@@ -108,6 +111,7 @@ final class LoupeHelper
     public function reset(): void
     {
         $this->loupe = [];
+        $this->inMemoryConfigurations = [];
     }
 
     /**
@@ -122,7 +126,7 @@ final class LoupeHelper
     {
         if (!$configuration instanceof Configuration) {
             if ('' === $this->directory) {
-                $configuration = self::$inMemoryConfigurations[$index->name] ?? $this->createConfiguration($index);
+                $configuration = $this->inMemoryConfigurations[$index->name] ?? $this->createConfiguration($index);
             } else {
                 $configurationFile = $this->getConfigurationFile($index);
 
