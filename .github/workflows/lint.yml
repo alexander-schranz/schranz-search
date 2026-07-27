@@ -1,10 +1,13 @@
 name: Lint
 
 on:
-    pull_request_target:
+    pull_request:
     push:
         branches:
             - '[0-9]+.[0-9]+'
+
+permissions:
+    contents: read
 
 jobs:
     lint:
@@ -18,9 +21,7 @@ jobs:
                   echo "${{ github.event.pull_request.head.sha }}"
 
             - name: Checkout project
-              uses: actions/checkout@v4
-              with:
-                  ref: "${{ github.event.pull_request.head.sha }}"
+              uses: actions/checkout@v7
 
             - name: Git infos
               run: |
@@ -46,7 +47,7 @@ jobs:
                   fi
 
             - name: Install composer dependencies
-              uses: ramsey/composer-install@v2
+              uses: ramsey/composer-install@v4
               env:
                   COMPOSER_ROOT_VERSION: "${{ steps.composer-root-version.outputs.value }}"
               with:

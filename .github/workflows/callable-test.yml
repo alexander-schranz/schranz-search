@@ -10,12 +10,16 @@ on:
                 required: true
                 type: boolean
 
+permissions:
+    contents: read
+
 jobs:
     test:
         name: "PHP ${{ matrix.php-version }}"
         runs-on: ubuntu-latest
 
-        env: ${{ secrets }}
+        env:
+            ALGOLIA_DSN_BASE64: YWxnb2xpYTovL0FEOVNRSzYxN0Y6MjljMjY5NDU2MTM5NGYwZDNkOTNjZWRiOGMzZGMzYjE/aG9zdHNbXT1BRDlTUUs2MTdGLTEuYWxnb2xpYS5uZXQ=
 
         strategy:
             fail-fast: false
@@ -34,15 +38,22 @@ jobs:
                       dependency-versions: 'highest'
 
         steps:
+            - name: Configure Algolia
+              run: |
+                  if [ -z "$ALGOLIA_DSN_BASE64" ]; then
+                      echo "::error::Missing ALGOLIA_DSN_BASE64."
+                      exit 1
+                  fi
+
+                  echo "ALGOLIA_DSN=$(printf '%s' "$ALGOLIA_DSN_BASE64" | base64 --decode)" >> "$GITHUB_ENV"
+
             - name: Output infos
               run: |
                   echo "${{ github.event.pull_request.merge_commit_sha }}"
                   echo "${{ github.event.pull_request.head.sha }}"
 
             - name: Checkout project
-              uses: actions/checkout@v4
-              with:
-                  ref: "${{ github.event.pull_request.head.sha }}"
+              uses: actions/checkout@v7
 
             - name: Git infos
               run: |
@@ -75,7 +86,7 @@ jobs:
                   fi
 
             - name: Install composer dependencies
-              uses: ramsey/composer-install@v2
+              uses: ramsey/composer-install@v4
               env:
                   COMPOSER_ROOT_VERSION: "${{ steps.composer-root-version.outputs.value }}"
               with:

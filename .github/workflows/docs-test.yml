@@ -1,7 +1,10 @@
 name: Docs Test
 
 on:
-    pull_request_target:
+    pull_request:
+
+permissions:
+    contents: read
 
 jobs:
     docs-build:
@@ -14,16 +17,14 @@ jobs:
                   echo "${{ github.event.pull_request.head.sha }}"
 
             - name: Checkout project
-              uses: actions/checkout@v4
-              with:
-                  ref: "${{ github.event.pull_request.head.sha }}"
+              uses: actions/checkout@v7
 
             - name: Git infos
               run: |
                   git rev-parse HEAD
                   git branch --show-current
 
-            - uses: actions/setup-python@v5
+            - uses: actions/setup-python@v7
               with:
                   python-version: 3.12
 
