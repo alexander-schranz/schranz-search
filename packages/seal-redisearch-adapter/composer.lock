@@ -955,12 +955,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "951090383701ccbb20fc0d9a975275fcb2496bd6"
+                "reference": "5fbf59e59ae203f31502ff0560086c0f961fc5d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/951090383701ccbb20fc0d9a975275fcb2496bd6",
-                "reference": "951090383701ccbb20fc0d9a975275fcb2496bd6",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5fbf59e59ae203f31502ff0560086c0f961fc5d6",
+                "reference": "5fbf59e59ae203f31502ff0560086c0f961fc5d6",
                 "shasum": ""
             },
             "require": {
@@ -1040,7 +1040,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-10-12T11:33:34+00:00"
+            "time": "2026-10-15T08:31:01+00:00"
         },
         {
             "name": "rector/rector",
