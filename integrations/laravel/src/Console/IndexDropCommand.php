@@ -58,7 +58,7 @@ final class IndexDropCommand extends Command
                 continue;
             }
 
-            if ($indexName && $indexName === $name) {
+            if ($indexName) {
                 $this->line('Drop search index "' . $indexName . '" of "' . $name . '" ...');
                 $task = $engine->dropIndex($indexName, ['return_slow_promise_result' => true]);
                 $task->wait();
