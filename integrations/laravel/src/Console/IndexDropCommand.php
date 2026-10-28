@@ -71,7 +71,7 @@ final class IndexDropCommand extends Command
             $task->wait();
         }
 
-        $this->info('Search indexes created.');
+        $this->info('Search indexes dropped.');
 
         return 0;
     }
